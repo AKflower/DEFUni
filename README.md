@@ -1,4 +1,7 @@
-# DEFUni
+# 📖 DEFUni 
+<div align=center><img width="483" alt="Ảnh màn hình 2024-04-09 lúc 01 28 04" src="https://github.com/AKflower/DEFUni/assets/89245858/ddac6f8d-dc94-490f-b940-3d9a7dac2bdf"></div>
+
+
 Trong bối cảnh của thế giới giáo dục đang nhanh chóng chuyển đổi với sự phát triển của công
 nghệ thông tin, trường đại học DEF đang tìm cách cải thiện và hiện đại hóa quản lý giáo dục và
 hoạt động học thuật thông qua việc phát triển một hệ thống quản lý học thuật toàn diện. Thách
@@ -34,3 +37,18 @@ hiệu quả quản lý giáo dục, tối ưu hóa quy trình học thuật, v�
 lượng cao cho sinh viên và giáo viên của mình. Đây sẽ là một bước tiến quan trọng giúp trường
 mở rộng quy mô hoạt động giáo dục và tăng cường vị thế cạnh tranh trong lĩnh vực giáo dục đại
 học.
+
+##  🚀 Installation
+### ⚙️ Run front-end ⚙️
+<pre>
+  cd app/front-end
+  npm install
+  npm run dev
+</pre>
+### ⚙️ Run back-end ⚙️
+<pre>
+  cd app/back-end
+  npm install
+  npm run start or npm run start:dev (for hot reload)
+</pre>
+
