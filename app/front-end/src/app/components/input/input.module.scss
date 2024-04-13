@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: 1.5em 0 0 0;
+    .title{
+        display: flex;
+        justify-content: space-between;
+        .label{
+            color:#334054;
+        }
+        .forgot{
+            color: #1570EF;
+        }
+    }
+   
+    .input{
+        width: 20em;
+        border-radius: 5px;
+        height: 2.5em;
+        padding: 0.5em;
+        margin-top: .5em;
+        border: .5px solid silver;
+    }
+   
+}

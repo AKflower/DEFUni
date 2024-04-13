@@ -1,0 +1,15 @@
+.container{
+    background: white;
+    padding: 3.5em;
+    border-radius: 10px;
+    .header{
+        display: flex;
+        justify-content: center;
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+    .form {
+        display: flex;
+        flex-direction: column;
+    }
+}

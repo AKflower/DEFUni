@@ -1,0 +1,69 @@
+.container{
+    background-color: #FBFBFB;
+    width: 100%;
+    position: fixed;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .logo{
+        font-size: 1.25em;
+        font-weight: 600;
+        padding: 0 0 0 1em;
+    }
+    .leftContainer{
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        .nav{
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            .tab{
+                min-width: 8em;
+              
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                &:hover{
+                    background-color: rgb(234, 234, 234);
+                    opacity: 0.8;
+                }
+            }
+            .tabAction{
+                min-width: 8em;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #13D4E0;
+                opacity: 0.8;
+                font-weight: 600;
+                color: white;
+                cursor: pointer;
+                border-bottom: 1px solid #069ba5;
+            }
+            
+          
+        }
+        .profile{
+            display: flex;
+            align-items: center;
+            .avatar{
+                background-color: #13D4E0;
+                border-radius: 50%;
+                height: 3em;
+                width: 3em;
+                margin: 0 0 0 1em;
+            }
+            .name{
+                padding: 0 1em 0 1em;
+                color: #9A9A9A;
+            }
+        }
+    }
+}
