@@ -1,6 +1,6 @@
-import Home from "./home";
+import Mycourse from "./mycourse";
 
-export default function HomePage() {
+export default function Mycourse() {
     return (
         <Home />
     )
