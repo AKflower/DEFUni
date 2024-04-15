@@ -1,4 +1,4 @@
-import Mycourse from "./mycourse";
+import Mycourse from "./Mycourse";
 
 export default function Mycourse() {
     return (
