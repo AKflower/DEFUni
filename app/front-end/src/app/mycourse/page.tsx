@@ -1,6 +1,6 @@
-import Mycourse from "./Mycourse";
+import Mycourse from "./mycourse";
 
-export default function Mycourse() {
+export default function mycourse() {
     return (
         <Home />
     )
