@@ -1,7 +1,7 @@
-import styles from './home.module.scss'
+import styles from './mycourse.module.scss'
 
-export default function Home() {
+export default function Mycourse() {
     return (
-        <div className={styles.testCss}>Home Page</div>
+        <div className={styles.testCss}>My course</div>
     )
 }
