@@ -163,8 +163,8 @@ export default function Course() {
             <div className={styles.courseContainer}>
                { tab===0 ? 
                courses.map((course) => (
-               <CourseItem name={course.name} description={course.description} date={course.date} quantity={course.quantity}/>)) : coursesRegistered.map((course) => (
-                <CourseItem name={course.name} description={course.description} date={course.date} quantity={course.quantity} isRegistered={course.isRegister}/>)) }
+               <CourseItem name={course.name} description={course.description} date={course.date} quantity={course.quantity} lecture='Ths. Lê Đình Thuận'/>)): coursesRegistered.map((course) => 
+               (<CourseItem name={course.name} description={course.description} date={course.date} quantity={course.quantity} isRegistered={course.isRegister} lecture='Ts. Nguyễn Đức Dũng'/>)) }
             </div>
         </div>
     )    

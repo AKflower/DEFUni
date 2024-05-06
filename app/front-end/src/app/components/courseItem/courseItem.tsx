@@ -1,7 +1,7 @@
 import styles from './courseItem.module.scss'
 import Button from '../button/button'
 
-export default function CourseItem({name,description,date,quantity,isRegistered=false} : {name: string, description: string, date: string, quantity: string, isRegistered?: boolean}){
+export default function CourseItem({name,description,date,quantity,isRegistered=false,lecture} : {name: string, description: string, date: string, quantity: string, isRegistered?: boolean, lecture: string}){
     return (
         <div className={styles.container}>
             <div className={styles.courseContainer}>
@@ -17,7 +17,7 @@ export default function CourseItem({name,description,date,quantity,isRegistered=
                 </div>
                 <div className={styles.lectureInfo}>
                     <div className={styles.avatar}></div>
-                    <div className={styles.name}>ThS. Lê Đình Thuận</div>
+                    <div className={styles.name}>{lecture}</div>
                 </div>
             </div>
            {!isRegistered ? <Button buttonName='Đăng ký'/> : <Button buttonName='Hủy' buttonColor='#D24040'/>}

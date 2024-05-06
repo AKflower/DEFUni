@@ -7,18 +7,18 @@ export class FirebaseController {
 
     @Post('write-student')
     addStudentToDB(@Body() studentData: any) {
-        try {
-            if (this.firebaseSevice.isValidStudentData(studentData)) return this.firebaseSevice.createStudent(studentData);
-        }
-        catch (error) {
-            throw error;
-        }
+        return this.firebaseSevice.createStudent(studentData);
     }
 
     @Post('write-teacher')
     addTeacherToDB(@Body() teacherData: any) {
+        return this.firebaseSevice.createTeacher(teacherData);
+    }
+
+    @Post('write-course')
+    addCourseToDB(@Body() courseData: any) {
         try {
-            if (this.firebaseSevice.isValidTeacherData(teacherData)) return this.firebaseSevice.createTeacher(teacherData);
+            if (this.firebaseSevice.isValidCourseData(courseData)) return this.firebaseSevice.createCourse(courseData);
         }
         catch (error) {
             throw error;
