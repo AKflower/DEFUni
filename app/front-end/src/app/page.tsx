@@ -4,7 +4,7 @@ import CoursePage from "./course/page";
 
 export default function Defuni() {
   return (
-      // <LoginPage />
-      <CoursePage/>
+      <LoginPage />
+      // <CoursePage/>
   );
 }

@@ -1,6 +1,7 @@
 import { Injectable, HttpException, HttpStatus, ForbiddenException, NotFoundException } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { ConfigService } from '@nestjs/config';
+import { CourseDto } from 'src/course/dto';
 require('dotenv').config();
 
 @Injectable()
@@ -24,7 +25,7 @@ export class FirebaseService {
             throw new HttpException('ID is required', HttpStatus.BAD_REQUEST);
         }
     
-        const id = studentData.id.toString();
+        const id = studentData.id;
         if (!/^\d{7}$/.test(id)) {
             throw new HttpException('Invalid ID format', HttpStatus.BAD_REQUEST);
         }
@@ -50,7 +51,7 @@ export class FirebaseService {
             throw new HttpException('ID is required', HttpStatus.BAD_REQUEST);
         }
     
-        const id = teacherData.id.toString();
+        const id = teacherData.id;
         if (!/^\d{7}$/.test(id)) {
             throw new HttpException('Invalid ID format', HttpStatus.BAD_REQUEST);
         }
@@ -76,8 +77,8 @@ export class FirebaseService {
             throw new HttpException('ID is required', HttpStatus.BAD_REQUEST);
         }
     
-        const id = courseData.id.toString();
-        if (!/^[A-Za-z]{2}\d{4}_[A-Za-z]\d{2}$/.test(id)) {
+        const id = courseData.id;
+        if (!/^[A-Za-z]{2}\d{4}_[A-Za-z]{1,4}\d{2}$/.test(id)) {
             throw new HttpException('Invalid ID format', HttpStatus.BAD_REQUEST);
         }
     
@@ -86,11 +87,12 @@ export class FirebaseService {
 
     async createCourse(courseData: any) {
         try {
-            if (this.isValidCourseData) {
+            if (this.isValidCourseData(courseData)) {
                 const newCourseRef = this.db.ref('courses').child(courseData.id);
                 delete courseData.id;
                 await newCourseRef.set(courseData);
             }
+            else throw new ForbiddenException("Invalid data");
         }
         catch (error) {
             throw error;
@@ -99,7 +101,7 @@ export class FirebaseService {
 
     // Functions for get data
 
-    async findUserbyEmail(email: string): Promise<any> {
+    async findUserByEmail(email: string): Promise<any> {
         try {
             const student_path = "/students/" + email.replace(/\./g, '_');
             const teacher_path = "/teachers/" + email.replace(/\./g, '_');
@@ -110,6 +112,24 @@ export class FirebaseService {
             if (student_snapshot.exists()) return student_snapshot.val();
             else if (teacher_snapshot.exists()) return teacher_snapshot.val();
             else throw new NotFoundException("User with email " + email + " not found.");
+        }
+        catch (error) {
+            throw new NotFoundException("Cannot find user by email: " + error);
+        }
+    }
+
+    async findCourseById(regex: string) {
+        try {
+            const coursesRef = admin.database().ref("courses");
+            const snapshot = await coursesRef.orderByKey().startAt(regex).endAt(regex + "\uf8ff").once("value");
+
+            const courses = [];
+            snapshot.forEach((childSnapshot) => {
+                const course = childSnapshot.val();
+                courses.push(course);
+            });
+            
+            return courses;
         }
         catch (error) {
             throw new NotFoundException("Cannot find user by email: " + error);

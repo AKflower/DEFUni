@@ -2,14 +2,16 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { AuthSignupDto, AuthSigninDto } from './dto';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import * as argon from 'argon2';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-    constructor(private firebase: FirebaseService) {}
+    constructor(private firebase: FirebaseService, private jwt: JwtService, private config: ConfigService) {}
     
     async login(dto: AuthSigninDto) {
         // Find user by email in Firebase.
-        const user = await this.firebase.findUserbyEmail(dto.email.replace(/\./g, '_'));
+        const user = await this.firebase.findUserByEmail(dto.email.replace(/\./g, '_'));
         // If no user throw an exception.
         if (user == null) throw new ForbiddenException("No user finded!");
 
@@ -19,7 +21,8 @@ export class AuthService {
         if (!match) throw new ForbiddenException("Wrong password.");
         // Return user.
         delete user.hash;
-        return user;
+        // return typeof parseInt(user.id);
+        return this.signToken(user.id, user.email);
     }
 
     async signup(dto: AuthSignupDto) {
@@ -48,11 +51,25 @@ export class AuthService {
                     await this.firebase.createTeacher(userData);
                     break;
             }
-            delete userData.hash;
-            return userData;
+            // delete userData.hash;
+            // return userData;
+            return this.signToken(dto.id, dto.email);
         }
         catch (error) {
             throw new ForbiddenException('Cannot write to database:\n' + error);
         }
+    }
+
+    async signToken(userId: string, email: string): Promise<{access_token: string}> {
+        const data = {
+            sub: userId,
+            email
+        }
+
+        const secret = this.config.get("JWT_SECRET");
+
+        const token = await this.jwt.signAsync(data, {expiresIn: '30m', secret: secret});
+        
+        return {access_token: token};
     }
 }

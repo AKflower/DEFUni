@@ -5,7 +5,7 @@ import Input from '../input/input'
 import Button from '../button/button'
 import fonts from '../../../../public/fonts/fonts'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import Home from '../../home/home';
 
 export default function LoginForm() {
@@ -32,7 +32,7 @@ export default function LoginForm() {
             body: JSON.stringify({ email, password }),
         })
         .then(response => {
-            if (response.status >= 200 && response.status < 300) console.log('Đăng nhập thành công');// router.push('../home');
+            if (response.status >= 200 && response.status < 300) router.push('./home');// console.log('Đăng nhập thành công'); 
             else console.log('Đăng nhập không thành công');
         })
         .catch(error => {
