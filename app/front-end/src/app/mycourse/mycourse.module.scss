@@ -1,0 +1,28 @@
+.container{
+  background-color: white;
+
+  .headBar{
+      display: flex;
+      justify-content: space-between;
+      .tabBar{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          .tab{
+              padding: 1em;
+              cursor: pointer;
+          }
+          .tabAction{
+              padding: 1em;
+              color: #1061a3;
+              background-color: #e2f2ff;
+              border-bottom: 2px solid #3b83be;
+              border-radius: 10px 10px 0 0;
+              cursor: pointer;
+          }
+      }
+      .toolBar{
+
+      }
+  }
+}
