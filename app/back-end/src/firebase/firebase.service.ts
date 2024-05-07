@@ -1,22 +1,22 @@
 import { Injectable, HttpException, HttpStatus, ForbiddenException, NotFoundException } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { ConfigService } from '@nestjs/config';
 require('dotenv').config();
 
 @Injectable()
 export class FirebaseService {
-    private db: admin.database.Database
+    private db: admin.database.Database;
     
-    constructor() {
+    constructor(private configService: ConfigService) {
         admin.initializeApp({
             credential: admin.credential.cert({
-                projectId: process.env.projectID,
-                privateKey: process.env.privateKey,
-                clientEmail: process.env.clientEmail,
+                projectId: this.configService.get('projectId'),
+                privateKey: this.configService.get('privateKey'),
+                clientEmail: this.configService.get('clientEmail'),
             }),
-            databaseURL: process.env.databaseURL
+            databaseURL: this.configService.get('databaseURL'),
         })
         this.db = admin.database();
-        
     }
 
     isValidStudentData(studentData: any): boolean {
