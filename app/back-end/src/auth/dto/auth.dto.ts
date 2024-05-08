@@ -1,4 +1,5 @@
-import { IsEmail, IsIn, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsArray, IsEmail, IsIn, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
 
 export class AuthSignupDto {
     @IsNotEmpty()
@@ -26,6 +27,20 @@ export class AuthSignupDto {
     @IsString()
     @IsNotEmpty()
     last_name: string;
+
+    @IsArray()
+    @IsOptional()
+    coures_id: string[]
+
+    @IsString()
+    @IsNotEmpty()
+    @Transform(({ value, obj }) => {
+        if (obj.user !== 'teacher') {
+            delete obj.degree;
+        }
+        return value;
+    })
+    degree: string;
 }
 
 export class AuthSigninDto {

@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Home from '../../home/home';
 
+
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,12 +33,17 @@ export default function LoginForm() {
             body: JSON.stringify({ email, password }),
         })
         .then(response => {
-            if (response.status >= 200 && response.status < 300) router.push('./home');// console.log('Đăng nhập thành công'); 
+            if (response.status >= 200 && response.status < 300) return response.json();// console.log('Đăng nhập thành công'); 
             else console.log('Đăng nhập không thành công');
         })
         .catch(error => {
             console.error(error);
-        });
+        })
+        .then(data => {
+            localStorage.setItem('accessToken', data.access_token);
+            router.push('./home');
+        })
+        .catch(error => { throw new Error("Cannot get access token." + error); });
     };
 
     return (

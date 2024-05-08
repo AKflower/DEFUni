@@ -22,7 +22,7 @@ export class AuthService {
         // Return user.
         delete user.hash;
         // return typeof parseInt(user.id);
-        return this.signToken(user.id, user.email);
+        return this.signToken(user.id, dto.email);
     }
 
     async signup(dto: AuthSignupDto) {
@@ -33,6 +33,8 @@ export class AuthService {
         const updatedAt = new Date().toUTCString();
         // Prepare user data.
         const email = dto.email;
+        const course: string[] = [];
+        if (dto.user == 'student') delete dto.degree;
         const userData = {
             email: email.replace(/\./g, '_'),
             first_name: dto.first_name,
@@ -40,7 +42,9 @@ export class AuthService {
             id: dto.id,
             hash: hash,
             createdAt: createdAt,
-            updatedAt: updatedAt
+            updatedAt: updatedAt,
+            course_id: course,
+            ...(dto.degree && { degree: dto.degree })
         };
         try {
             switch (dto.user) {
@@ -63,7 +67,7 @@ export class AuthService {
     async signToken(userId: string, email: string): Promise<{access_token: string}> {
         const data = {
             sub: userId,
-            email
+            email: email
         }
 
         const secret = this.config.get("JWT_SECRET");

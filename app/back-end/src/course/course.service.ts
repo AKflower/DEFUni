@@ -17,4 +17,12 @@ export class CourseService {
     async addCourse(dto: CourseDto) {
         await this.firebase.createCourse(dto);
     }
+
+    async addStudentToCourse(course_id: string, email: string) {
+        return await this.firebase.addStudentToCourse(course_id, email);
+    }
+
+    async getAllCourse(userEmail: string) {
+        return await this.firebase.getAllCourse(userEmail);
+    }
 }

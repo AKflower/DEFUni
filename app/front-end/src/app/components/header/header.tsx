@@ -25,7 +25,7 @@ export default function Header(){
                 <div className={styles.profile}>
                     <div className={styles.avatar}>
                     </div>
-                    <div className={styles.name}>Hi, John Doe</div>
+                    <div className={styles.name}>Nguyễn Văn A</div>
                 </div>
             </div>
         </div>

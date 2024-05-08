@@ -1,6 +1,6 @@
 import MyCourse from "./mycourse";
 
-export default function myCourse() {
+export default function MyCoursePage() {
     return (
         <MyCourse/>
     )

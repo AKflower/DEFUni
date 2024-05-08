@@ -19,7 +19,7 @@ export class CourseDto {
     students_email: string[];
 
     @IsString()
-    @IsOptional()
+    @IsNotEmpty()
     teacher_email: string;
 
     @IsNotEmpty()
