@@ -25,4 +25,12 @@ export class CourseService {
     async getAllCourse(userEmail: string) {
         return await this.firebase.getAllCourse(userEmail);
     }
+
+    async addDocumentToCourse(course_id: string, doc: string) {
+        return await this.firebase.addDocumentToCourse(course_id, doc);
+    }
+
+    async addExamToCourse(course_id: string, exam: any) {
+        return await this.firebase.addExamToCourse(course_id, exam);
+    }
 }

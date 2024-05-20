@@ -28,4 +28,24 @@ export class CourseController {
     async getAllCourse(@GetUser() user: any) {
         return await this.courseservice.getAllCourse(user.email);
     }
+
+    @Post('add-document')
+    async addDocumentToCourse(@Body() payload: any) {
+        const course_id = payload.course_id;
+        const doc = payload.doc;
+
+        return this.courseservice.addDocumentToCourse(course_id, doc);
+    }
+
+    @Post('add-exam')
+    async addExamToCourse(@Body() payload: any) {
+        const course_id = payload.course_id;
+        const exam = {
+            startDate: payload.startDate,
+            endDate: payload.endDate,
+            name: payload.name
+        }
+
+        return this.courseservice.addExamToCourse(course_id, exam);
+    }
 }

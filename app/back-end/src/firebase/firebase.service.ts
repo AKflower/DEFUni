@@ -252,4 +252,65 @@ export class FirebaseService {
             throw new ForbiddenException("Error:" + error);
         }
     }
+
+    async addDocumentToCourse(course_id: string, doc: string): Promise<any> {
+        try {
+            const path = "/courses/" + course_id;
+        
+            const snapshot = await admin.database().ref(path).once('value');
+            
+            if (snapshot.exists()) {
+                const courseData = snapshot.val();
+                if (!courseData.hasOwnProperty('documents') || !Array.isArray(courseData.documents)) courseData.documents = [];
+
+                courseData.documents.push(doc);
+                await admin.database().ref(path).update({ documents: courseData.documents });
+            }
+            else throw new NotFoundException("User with email " + course_id + " not found.");
+
+            return doc;
+        }
+        catch (error) {
+            throw new NotFoundException("Cannot find user by course_id: " + error);
+        }
+    }
+
+    async addExamToCourse(course_id: string, exam: any): Promise<any> {
+        try {
+            const startD = exam.startDate;
+            const endD = exam.endDate;
+            const name = exam.name;
+            
+            const coursePath = "/courses/" + course_id;
+    
+            const courseSnapshot = await admin.database().ref(coursePath).once('value');
+            const examSnapshot = admin.database().ref(coursePath).child("examinations").child(name);
+            
+            if (!courseSnapshot.exists()) {
+                throw new Error("Course with ID " + course_id + " not found.");
+            }
+    
+            const courseData = courseSnapshot.val();
+    
+            let num_of_students: any;
+            if (courseData.students_email) num_of_students = courseData.students_email.length;
+    
+            for (let i = 0; i < num_of_students; i++) {
+                const studentEmail = courseData.students_email[i].replace(/\./g, '_');
+                const data = {
+                    startDate: exam.startDate,
+                    endDate: exam.endDate,
+                    submit: null,
+                    score: null
+                };
+                const r = admin.database().ref(coursePath + "/examinations/" + exam.name).child(studentEmail);
+                r.set(data);
+            }
+            // await admin.database().ref(coursePath).update({ examinations: courseData.examinations });
+    
+            return exam;
+        } catch (error) {
+            throw new Error("Error adding exam to course with ID " + course_id + ": " + error.message);
+        }
+    }
 }
